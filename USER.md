@@ -24,7 +24,7 @@
 - Business partner: **Mateo** (Amazon)
 - Mostly on autopilot
 
-### Source Start (sourcestart.io)
+### SourceDart (sourcedart.io)
 - Walmart sourcing tool with users and revenue
 - Not a current focus — Matt wants to exit sometime in 2026
 
