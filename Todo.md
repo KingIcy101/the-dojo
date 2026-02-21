@@ -1,8 +1,7 @@
 # Todo.md - Live Task List
 
 ## Active
-- [ ] Set up memory search embedding provider (need OpenAI or Gemini API key from Matt)
-- [ ] Set up cron jobs for overnight work (need gateway pairing to work)
+- [ ] **CLI pairing** — Matt needs to approve pending device via Control UI at http://127.0.0.1:18789/ (token: `9c9aa623d2ba1f71b37d4d86aaa288a1f5889433b168d13b`)
 - [ ] Build voice call system (backlog — needs Twilio + Deepgram accounts)
 - [ ] Build GoHighLevel integration — map leads into CRM automatically
 
@@ -25,6 +24,9 @@
 - [x] Set fallback model (Opus 4.6)
 - [x] Install ffmpeg (arm64, ~/bin/)
 - [x] Install Whisper for voice transcription
+- [x] Configure OpenAI embeddings for memory search (text-embedding-3-small)
+- [x] Memory search live — 4 files indexed, 32 chunks
+- [x] Cron jobs written — morning brief (9am ET) + nightly memory (11pm ET)
 
 ---
 _Updated: 2026-02-20_

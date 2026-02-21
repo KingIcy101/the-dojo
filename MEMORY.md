@@ -81,6 +81,9 @@
 - Account managers (trigger: when Preston hits 20-25 clients)
 - Sales closers (trigger: when Matt is at discovery call capacity)
 - Colombia for sales talent (SDR/outreach role)
+- **Research done**: Colombia SDR hiring research in `memory/colombia-sdr-research.md`
+- **JD ready**: Job description draft in `memory/sdr-job-description.md` (needs email before posting)
+- Recommended comp: $800–$1,000 base + $100–$150/booked-and-held discovery call
 
 ## Voice Call System - Plan
 - Goal: Matt or Preston can call a number and have a natural voice conversation with Halo
@@ -98,10 +101,13 @@
 - To-do: set up dedicated accounts for Twilio, Deepgram, ElevenLabs, etc. as needed
 - Security priority: separate logins for everything
 
-## GHL Integration - On the List
-- Connect leads and pipeline into GoHighLevel automatically
-- Their API is solid, can build automations
-- High-leverage project for Halo Marketing
+## GHL Integration - Plan Written, Ready to Build
+- Full integration plan in `memory/ghl-integration-plan.md`
+- Can auto-import leads from Saleshandy, Facebook Ads, GHL forms
+- Can auto-update pipeline stages on booking + stage changes
+- Architecture: Cloudflare Worker or n8n (self-hosted) as the router
+- **Blocker**: Matt needs to provide GHL Location API Key + pipeline stage names
+- Estimated build: 1–2 days once I have the API key
 
 ## My Role
 - Personal assistant → eventually managing agent teams for his business
@@ -124,6 +130,10 @@
 - ffmpeg installed at ~/bin/ffmpeg (arm64 static build)
 - Whisper installed (Python 3.9) at ~/Library/Python/3.9/bin/whisper
 - No Homebrew installed (needs admin password); workaround: ~/bin/ for binaries
+- Memory search: LIVE — OpenAI text-embedding-3-small, 4 files indexed, 32 chunks, vector + FTS
+- Cron jobs: morning brief (9am ET) + nightly memory (11pm ET) — written to ~/.openclaw/cron/jobs.json
+- **web_search broken**: needs Brave API key (`openclaw configure --section web`). Matt doesn't have one yet.
+- CLI pairing: STILL BROKEN — pending request ID `85872dfe` needs approval in Control UI http://127.0.0.1:18789/
 
 ## First Session: 2026-02-20
 - Did bootstrap, got name, set up identity

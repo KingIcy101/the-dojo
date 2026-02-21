@@ -18,10 +18,25 @@
 - Corrected intel doc inaccuracies per Matt (burn rate unknown, Jacek is a client)
 
 ### Known Issues / Blockers
-- Memory search has no embedding provider (needs OpenAI or Gemini key)
-- Cron jobs need gateway pairing to configure
+- CLI pairing stuck (pending approval in Control UI at http://127.0.0.1:18789/)
 - Voice call system: needs Twilio + Deepgram accounts (not yet set up)
-- GHL integration: on list but not started
+- GHL integration: plan written, waiting on GHL API key + pipeline structure from Matt
+- Brave API key not configured (web_search broken)
+
+---
+
+## 2026-02-21 — Overnight Work
+
+### Files Created
+- `memory/colombia-sdr-research.md` — Colombia SDR hiring research, pay benchmarks, platforms, screening process
+- `memory/sdr-job-description.md` — Ready-to-post job description (needs email address before publishing)
+- `memory/reengagement-scripts.md` — Re-engagement scripts for Suzanne (dental) + Mike/Andy (telehealth)
+- `memory/ghl-integration-plan.md` — Full GHL API integration plan, architecture options, build timeline
+
+### Completed
+- Memory search: configured OpenAI embeddings (text-embedding-3-small), 4 files indexed, 32 chunks
+- Cron jobs: morning brief (9am ET daily) + nightly memory (11pm ET) written to jobs.json
+- Security audit: 0 critical, 2 warnings (down from 3 after credentials fix)
 
 ### Security
 - 0 critical issues
