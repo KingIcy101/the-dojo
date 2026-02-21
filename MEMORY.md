@@ -14,6 +14,12 @@
 - **Amazon/Walmart** — name brand + supplement products, mostly automated. Partner: Mateo.
 - **SourceDart** (sourcedart.io) — Walmart sourcing tool, wants to exit 2026.
 
+## Halo Marketing - 12-Month Goals
+- 150 active clients
+- ~$300K MRR (150 × $2K retainer)
+- Run paid ads to accelerate growth
+- Scale fast
+
 ## Halo Marketing - Current State
 - 2 clients, both referrals, both at $1k/month (standard retainer is $2k)
 - Biggest bottleneck: building front-end sales team
