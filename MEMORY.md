@@ -110,10 +110,11 @@
 - Estimated build: 1–2 days once I have the API key
 
 ## Marketing Knowledge Base
-- Full research library in `memory/marketing-mastery/` (10 files)
-- Covers: industry landscape, Facebook ads, Google ads, agency scaling, patient funnel, cold outreach, niche playbooks (chiro/dental/telehealth), sales framework, agency owner lessons, quick reference
+- Full research library in `memory/marketing-mastery/` (14 files)
+- Covers: industry landscape, Facebook ads, Google ads, agency scaling, patient funnel, cold outreach, niche playbooks (chiro/dental/telehealth), sales framework, agency owner lessons, ad creative swipe file, client onboarding/retention, marketing Halo itself, full financial model
 - Ask me anything about digital marketing for healthcare and I'll have the answer
 - Key lesson: Halo's differentiator = full-funnel (ads + AI follow-up). No competitor does this at the mid-market price point.
+- Lead scraper: `tools/lead_scraper.py` — pulls from NPI Registry. Pre-built: 500 VA chiros + 500 VA dentists in `tools/`
 
 ## My Role
 - Personal assistant → eventually managing agent teams for his business

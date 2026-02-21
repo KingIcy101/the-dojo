@@ -160,3 +160,7 @@ Lead submits form
 | `08-halo-positioning-and-sales.md` | Discovery call framework, objection handling, close |
 | `09-agency-owner-lessons.md` | Lessons from Hormozi, Gadzhi, Robb Bailey, Sabri Suby |
 | `10-quick-reference.md` | This file — cheat sheet |
+| `11-ad-creative-swipe-file.md` | Ready-to-use ad copy for chiro, dental, telehealth + video scripts |
+| `12-client-onboarding-and-retention.md` | Onboarding checklist, 30/60/90 reviews, reporting templates, churn prevention |
+| `13-halo-own-marketing.md` | How to market the agency itself — ads, content, webinar model |
+| `14-agency-financial-model.md` | Unit economics, P&L by stage, LTV:CAC, exit valuation |
