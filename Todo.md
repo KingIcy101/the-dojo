@@ -1,7 +1,7 @@
 # Todo.md - Live Task List
 
 ## Active
-- [ ] **CLI pairing** — Matt needs to approve pending device via Control UI at http://127.0.0.1:18789/ (token: `9c9aa623d2ba1f71b37d4d86aaa288a1f5889433b168d13b`)
+- [x] **CLI pairing** — FIXED 2026-02-21. Approved pending repair request via `openclaw devices approve`. All CLI commands now working.
 - [ ] Build voice call system (backlog — needs Twilio + Deepgram accounts)
 - [ ] Build GoHighLevel integration — map leads into CRM automatically
 

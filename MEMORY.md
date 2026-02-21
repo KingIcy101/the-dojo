@@ -109,6 +109,12 @@
 - **Blocker**: Matt needs to provide GHL Location API Key + pipeline stage names
 - Estimated build: 1–2 days once I have the API key
 
+## Marketing Knowledge Base
+- Full research library in `memory/marketing-mastery/` (10 files)
+- Covers: industry landscape, Facebook ads, Google ads, agency scaling, patient funnel, cold outreach, niche playbooks (chiro/dental/telehealth), sales framework, agency owner lessons, quick reference
+- Ask me anything about digital marketing for healthcare and I'll have the answer
+- Key lesson: Halo's differentiator = full-funnel (ads + AI follow-up). No competitor does this at the mid-market price point.
+
 ## My Role
 - Personal assistant → eventually managing agent teams for his business
 - Priority: Halo Marketing growth
@@ -133,7 +139,7 @@
 - Memory search: LIVE — OpenAI text-embedding-3-small, 4 files indexed, 32 chunks, vector + FTS
 - Cron jobs: morning brief (9am ET) + nightly memory (11pm ET) — written to ~/.openclaw/cron/jobs.json
 - **web_search broken**: needs Brave API key (`openclaw configure --section web`). Matt doesn't have one yet.
-- CLI pairing: STILL BROKEN — pending request ID `85872dfe` needs approval in Control UI http://127.0.0.1:18789/
+- CLI pairing: FIXED 2026-02-21 — approved pending repair via `openclaw devices approve`. `openclaw cron list`, `openclaw gateway call`, all commands working.
 
 ## First Session: 2026-02-20
 - Did bootstrap, got name, set up identity
