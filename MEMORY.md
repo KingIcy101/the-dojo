@@ -1,11 +1,13 @@
 # MEMORY.md - Long-Term Memory
 
 ## About Matt
-- 24 years old, Virginia, entrepreneur
+- 24 years old, lives in Virginia
+- From Hagerstown, Maryland; went to Hood College in Frederick, MD
 - Graduated 2023, went full-time on Amazon business
 - Currently building Halo Marketing as his primary focus
+- Amazon FBA: ~$40K/month profit (provides runway + removes sales desperation)
 - Amazon/Walmart business is largely automated (has VA)
-- Wants to exit Source Start (sourcestart.io) in 2026
+- Wants to exit SourceDart (sourcedart.io) in 2026
 - Works out nearly daily, has family + girlfriend
 - Wants to scale hard in his 20s
 
@@ -20,26 +22,63 @@
 - Run paid ads to accelerate growth
 - Scale fast
 
-## Halo Marketing - Current State
-- 2 clients, both referrals, both at $1k/month (standard retainer is $2k)
-- Biggest bottleneck: building front-end sales team
-- Looking at Colombia for sales talent (SDR/booking role)
-- Fulfillment is solid — main gap is lead gen + sales
-- Goal: booked discovery calls that convert to closes
+## Halo Marketing - Current State (from full intel doc)
+- Official launch: January 19, 2026 | HQ: Maryland (remote)
+- 1 paying client: Renee (chiropractor, $1K/month)
+- 1 strategic partnership: Alex (3 locations, free trial — learning competitor's system)
+- Pipeline rebuilding: Suzanne (dental) and Mike/Andy (telehealth brain injury) fell off
+- Former team member: Vanessa Herrera (Client Success Manager, departed — big gap)
+- Monthly burn: $20K ($10K each from Matt + Preston)
+- Break-even: 10 clients ($20K MRR)
+
+## Halo Marketing - Pricing
+- Standard: $1,950/month (dental, chiro)
+- Telehealth/specialized: $2,950/month
+- Discounted: $1,000/month (case-by-case)
+- 3-month minimum commitment
+- Payment BEFORE service begins (no exceptions)
+
+## Halo Marketing - Services
+- Facebook/Google ads + creative
+- Landing pages (GoHighLevel)
+- AI call center (Bland.ai) — positioned as "dedicated appointment reminder team" (never as AI)
+- Automated SMS/email follow-up
+- CRM setup + pipeline management
+- HIPAA-compliant infrastructure
+- Appointment booking integration
+
+## Halo Marketing - Tech Stack
+- GoHighLevel (GHL): CRM, landing pages, pipelines, client dashboards
+- Saleshandy: cold email outreach (domain: trygohalomarketing.com)
+- Bland.ai: AI calling (positioned as human team)
+- Slack: internal comms
+- Tally: client intake forms
+- Trello: task management
 
 ## Halo Marketing - Sales Flow
-- Leads found manually → tracked in Google Sheet
-- Sales rep cold calls to book discovery call (call 1)
-- Discovery call: gauge interest, if yes → book close call (call 2)
-- Close call: proposal + contracts sent
-- Then moved to onboarding → account manager handles
-- Had an account manager, had to let her go — need a new one
-- Matt + Preston running discovery calls themselves for now (too few clients to need hand-off yet)
-- Plan: train sales reps to run discovery calls once volume picks up
-- Sales rep comp: 20% of $2K retainer ($400/close) until 50 active clients + 5% residuals for 6 months per active client
-- Sales rep handles full process: outreach → meeting → close → hand off to account manager
-- CRM: GoHighLevel (GHL) — set up but leads not fully mapped in yet (needs dev work)
-- GHL is the goal for central CRM for everything
+- Cold outreach (calls + email) → book discovery call
+- Discovery call (consultative, problem-solving) → if interest → close call
+- Close call: proposal + contracts → payment → onboarding
+- Account manager handles ongoing client relationship
+- Former AM: Vanessa (gone) — role currently unassigned
+- Matt + Preston running discovery calls themselves currently
+- Sales rep comp: 20% of retainer ($400/close) until 50 active clients + 5% residuals 6 months
+- Daily cold call target: 50+ calls/day
+- Cold email: multi-touch sequences, "confused patient" approach
+- CRM: GoHighLevel (leads not fully mapped in yet — needs dev work)
+
+## Halo Marketing - Immediate Priorities
+1. Rebuild pipeline (Suzanne + Mike/Andy fell off)
+2. Fill outreach gap (Vanessa's role unassigned)
+3. Deliver results for Renee (first client, proof of concept)
+4. Document Alex's competitive intel (free trial)
+5. Follow up with Suzanne + Mike/Andy to learn why they didn't close
+
+## Halo Marketing - Hiring Plan
+- Cold outreach specialist (HIGH priority — replace Vanessa)
+- Account managers (trigger: when Preston hits 20-25 clients)
+- Sales closers (trigger: when Matt is at discovery call capacity)
+- Colombia for sales talent (SDR/outreach role)
 
 ## Voice Call System - Plan
 - Goal: Matt or Preston can call a number and have a natural voice conversation with Halo
