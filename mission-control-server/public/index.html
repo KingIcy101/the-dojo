@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Control — Halo</title>
+<style>
+:root {
+  --bg: #06060e;
+  --s1: #0e0e1a;
+  --s2: #141422;
+  --s3: #1a1a2e;
+  --b1: #1e1e32;
+  --b2: #28284a;
+  --accent: #6c63ff;
+  --green: #00d48a;
+  --yellow: #f5b731;
+  --red: #ff5e6c;
+  --blue: #3b9eff;
+  --pink: #ff64b4;
+  --teal: #00c8b4;
+  --orange: #ff8c3c;
+  --text: #e8e8f8;
+  --t2: #8888aa;
+  --t3: #44446a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:4px}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(6,6,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);height:52px;display:flex;align-items:center;padding:0 24px;gap:16px}
+.tb-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;letter-spacing:-.4px;margin-right:4px}
+.tb-pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(108,99,255,.5);animation:sonar 2.4s ease infinite}
+@keyframes sonar{0%{box-shadow:0 0 0 0 rgba(108,99,255,.5)}70%{box-shadow:0 0 0 8px rgba(108,99,255,0)}100%{box-shadow:0 0 0 0 rgba(108,99,255,0)}}
+.tb-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(0,212,138,.1);color:var(--green);border:1px solid rgba(0,212,138,.2);font-weight:600}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.tb-clock{font-size:12px;color:var(--t3);font-variant-numeric:tabular-nums}
+.tb-refresh{width:28px;height:28px;border-radius:7px;background:var(--s2);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);font-size:13px;transition:all .15s}
+.tb-refresh:hover{border-color:var(--accent);color:var(--accent)}
+.tb-refresh.spinning{animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── PAGE ── */
+.page{max-width:1320px;margin:0 auto;padding:22px 20px 48px;display:flex;flex-direction:column;gap:20px}
+
+/* ── SECTION LABEL ── */
+.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3);margin-bottom:12px}
+
+/* ── GOAL CARDS ── */
+.goals-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.goals-row{grid-template-columns:1fr}}
+.goal-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:border-color .2s}
+.goal-card:hover{border-color:var(--b2)}
+.goal-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:14px 14px 0 0}
+.gc-purple::after{background:linear-gradient(90deg,var(--accent),#9c8fff)}
+.gc-green::after{background:linear-gradient(90deg,var(--green),#40f0b0)}
+.gc-yellow::after{background:linear-gradient(90deg,var(--yellow),#ffd060)}
+.goal-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.goal-label{font-size:12px;color:var(--t2);font-weight:600}
+.goal-pct{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.goal-value{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.goal-target{font-size:11px;color:var(--t3)}
+.goal-bar{height:5px;background:var(--s3);border-radius:5px;overflow:hidden;margin-top:12px}
+.goal-fill{height:100%;border-radius:5px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+/* ── STREAK + WINS ── */
+.wins-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px}
+@media(max-width:900px){.wins-grid{grid-template-columns:1fr}}
+
+.streak-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.streak-number{font-size:56px;font-weight:900;letter-spacing:-3px;line-height:1;background:linear-gradient(135deg,var(--yellow),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.streak-label{font-size:13px;color:var(--t2);font-weight:600;margin-top:-4px}
+.streak-days{display:flex;gap:5px;flex-wrap:wrap}
+.sd{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transition:all .2s}
+.sd-done{background:rgba(108,99,255,.15);color:var(--accent);border:1px solid rgba(108,99,255,.3)}
+.sd-today{background:var(--accent);color:#fff;box-shadow:0 0 12px rgba(108,99,255,.4)}
+.sd-future{background:var(--s2);color:var(--t3);border:1px solid var(--b1)}
+.streak-quote{font-size:11px;color:var(--t3);font-style:italic;line-height:1.5;border-top:1px solid var(--b1);padding-top:12px}
+
+.wins-feed{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;overflow:hidden}
+.wins-scroll{max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:1px}
+.win-row{display:flex;align-items:flex-start;gap:10px;padding:9px 8px;border-radius:8px;transition:background .15s;cursor:default}
+.win-row:hover{background:var(--s2)}
+.win-emoji{font-size:14px;flex-shrink:0;margin-top:1px}
+.win-body{flex:1;min-width:0}
+.win-text{font-size:12px;font-weight:600;color:var(--text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-meta{font-size:10px;color:var(--t3);margin-top:2px}
+.win-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(0,212,138,.1);color:var(--green);border:1px solid rgba(0,212,138,.15);flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+
+/* ── KANBAN ── */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:1000px){.kanban{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.kanban{grid-template-columns:1fr}}
+.k-col{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:12px;min-height:200px}
+.k-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.k-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t2)}
+.k-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.k-count{font-size:10px;color:var(--t3);background:var(--s2);width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.k-card{background:var(--s2);border:1px solid var(--b1);border-radius:8px;padding:10px 11px;margin-bottom:6px;transition:all .15s;cursor:default}
+.k-card:hover{border-color:var(--b2);transform:translateY(-1px)}
+.k-card:last-child{margin-bottom:0}
+.k-card-title{font-size:12px;font-weight:600;margin-bottom:7px;line-height:1.35;color:var(--text)}
+.k-card-foot{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.k-agent{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(108,99,255,.1);color:#9c8fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.k-pri{font-size:9px;font-weight:700;text-transform:uppercase;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.pri-h{background:rgba(255,94,108,.12);color:var(--red)}
+.pri-m{background:rgba(245,183,49,.1);color:var(--yellow)}
+.pri-l{background:rgba(68,68,106,.2);color:var(--t3)}
+.pri-d{background:rgba(0,212,138,.1);color:var(--green)}
+.pri-w{background:rgba(59,158,255,.1);color:var(--blue)}
+.k-card.done{opacity:.55}
+
+/* ── AGENT GRID ── */
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.a-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;transition:all .2s;cursor:default}
+.a-card:hover{border-color:var(--b2);transform:translateY(-1px)}
+.a-card.building{opacity:.55}
+.a-avatar{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.a-info{flex:1;min-width:0}
+.a-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.a-role{font-size:10px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-status{flex-shrink:0}
+.dot-on{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)}
+.dot-building{width:7px;height:7px;border-radius:50%;background:var(--t3)}
+
+/* ── TITAN CORNER ── */
+.titan-card{background:linear-gradient(135deg,rgba(245,183,49,.04) 0%,rgba(108,99,255,.04) 100%);border:1px solid rgba(245,183,49,.2);border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.titan-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--yellow),var(--accent))}
+.titan-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.titan-icon{font-size:22px}
+.titan-name{font-size:15px;font-weight:800}
+.titan-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.titan-schedule-badge{margin-left:auto;font-size:10px;padding:3px 9px;border-radius:10px;background:rgba(245,183,49,.08);color:rgba(245,183,49,.6);border:1px solid rgba(245,183,49,.12)}
+.titan-quote{border-left:3px solid var(--yellow);padding:10px 16px;background:rgba(0,0,0,.2);border-radius:0 8px 8px 0;margin-bottom:16px;font-size:13px;color:var(--t2);line-height:1.6;font-style:italic}
+.titan-quote cite{display:block;margin-top:6px;font-style:normal;font-size:10px;color:var(--t3)}
+.titan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:700px){.titan-grid{grid-template-columns:1fr}}
+.t-block{background:rgba(0,0,0,.2);border:1px solid rgba(245,183,49,.08);border-radius:8px;padding:11px 12px}
+.t-block-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(245,183,49,.45);margin-bottom:6px}
+.t-block-text{font-size:12px;color:var(--t2);line-height:1.5}
+.t-block-text strong{color:var(--yellow)}
+
+/* ── SCHEDULE ── */
+.schedule-row{display:flex;gap:8px;flex-wrap:wrap}
+.sched-item{display:flex;align-items:center;gap:7px;background:var(--s1);border:1px solid var(--b1);border-radius:9px;padding:8px 12px;font-size:11px;color:var(--t2)}
+.sched-time{color:var(--t3);font-size:10px}
+
+/* ── LOADING ── */
+.loading{display:flex;align-items:center;justify-content:center;height:calc(100vh - 52px);flex-direction:column;gap:14px}
+.loading-spinner{width:36px;height:36px;border:3px solid var(--b2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.loading-text{font-size:13px;color:var(--t3)}
+
+/* ── ERROR ── */
+.err-toast{position:fixed;bottom:20px;right:20px;background:var(--s2);border:1px solid var(--red);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--red);z-index:999;display:none}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .35s ease forwards}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-logo">
+    <div class="tb-pulse"></div>
+    Mission Control
+    <span style="color:var(--t3);font-weight:400;font-size:13px">— Halo</span>
+  </div>
+  <span class="tb-badge" id="agentBadge">● Loading...</span>
+  <div class="tb-right">
+    <span class="tb-clock" id="clock"></span>
+    <div class="tb-refresh" id="refreshBtn" onclick="loadData()" title="Refresh">↻</div>
+  </div>
+</div>
+
+<div id="loading" class="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading your team...</div>
+</div>
+
+<div id="page" class="page" style="display:none">
+
+  <!-- GOALS -->
+  <div>
+    <div class="sec-label">Halo Goals — 2026</div>
+    <div class="goals-row" id="goalsRow"></div>
+  </div>
+
+  <!-- STREAK + WINS -->
+  <div class="wins-grid">
+    <div class="streak-card">
+      <div>
+        <div class="streak-number" id="streakNum">0</div>
+        <div class="streak-label">Active day streak 🔥</div>
+      </div>
+      <div class="streak-days" id="streakDays"></div>
+      <div class="streak-quote">"Show up every day. The gap between where you are and where you want to be is just time × consistency." — Titan</div>
+    </div>
+    <div class="wins-feed">
+      <div class="sec-label" style="margin-bottom:10px">Recent Wins</div>
+      <div class="wins-scroll" id="winsFeed"></div>
+    </div>
+  </div>
+
+  <!-- TITAN -->
+  <div class="titan-card">
+    <div class="titan-header">
+      <span class="titan-icon">👑</span>
+      <div>
+        <div class="titan-name">Titan's Corner</div>
+        <div class="titan-sub">Hormozi · Naval · Bezos · Gadzhi · Frisella · Buffett · Musk</div>
+      </div>
+      <div class="titan-schedule-badge">10am · Wed · Sun 6:30pm</div>
+    </div>
+    <div class="titan-quote" id="titanQuote"></div>
+    <div class="titan-grid" id="titanGrid"></div>
+  </div>
+
+  <!-- KANBAN -->
+  <div>
+    <div class="sec-label">Active Board</div>
+    <div class="kanban" id="kanban"></div>
+  </div>
+
+  <!-- AGENTS -->
+  <div>
+    <div class="sec-label">Agent Team</div>
+    <div class="agents-grid" id="agentsGrid"></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div>
+    <div class="sec-label">Automated Schedule</div>
+    <div class="schedule-row" id="scheduleRow"></div>
+  </div>
+
+  <div style="text-align:center;font-size:11px;color:var(--t3);padding-top:8px">
+    Auto-refreshes every 30s · Built by Alo · <span id="lastUpdated"></span>
+  </div>
+
+</div>
+
+<div class="err-toast" id="errToast">⚠ Connection lost — retrying...</div>
+
+<script>
+let state = null;
+
+// ── Clock ──
+function tick() {
+  document.getElementById('clock').textContent = new Date().toLocaleString('en-US', {
+    timeZone: 'America/New_York', weekday: 'short', month: 'short',
+    day: 'numeric', hour: '2-digit', minute: '2-digit'
+  }) + ' ET';
+}
+tick(); setInterval(tick, 15000);
+
+// ── Number animation ──
+function animateNum(el, target, prefix, suffix, duration) {
+  const start = performance.now();
+  const from = 0;
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+    const val = Math.round(from + (target - from) * ease);
+    el.textContent = (prefix || '') + val.toLocaleString() + (suffix || '');
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Format currency ──
+function fmtMoney(n) {
+  if (n >= 1000) return '$' + (n/1000).toFixed(1) + 'K';
+  return '$' + n;
+}
+
+// ── Render goals ──
+function renderGoals(goals) {
+  const colors = ['gc-purple','gc-green','gc-yellow'];
+  const fills = ['linear-gradient(90deg,#6c63ff,#9c8fff)', 'linear-gradient(90deg,#00d48a,#40f0b0)', 'linear-gradient(90deg,#f5b731,#ffd060)'];
+  const pctColors = ['rgba(108,99,255,.15)','rgba(0,212,138,.1)','rgba(245,183,49,.1)'];
+  const pctTextColors = ['#9c8fff','#00d48a','#f5b731'];
+
+  document.getElementById('goalsRow').innerHTML = goals.map((g, i) => {
+    const pct = Math.min((g.current / g.target) * 100, 100);
+    const displayVal = g.prefix ? fmtMoney(g.current) : g.current.toLocaleString() + g.unit;
+    const displayTarget = g.prefix ? fmtMoney(g.target) : g.target.toLocaleString() + g.unit;
+    return `
+      <div class="goal-card ${colors[i]} fade-in" style="animation-delay:${i*0.1}s">
+        <div class="goal-top">
+          <div class="goal-label">${g.label}</div>
+          <div class="goal-pct" style="background:${pctColors[i]};color:${pctTextColors[i]}">${pct.toFixed(1)}%</div>
+        </div>
+        <div class="goal-value" style="color:${pctTextColors[i]}">${displayVal}</div>
+        <div class="goal-target">Target: ${displayTarget}</div>
+        <div class="goal-bar">
+          <div class="goal-fill" style="width:0%;background:${fills[i]}" data-target="${pct}"></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.goal-fill').forEach(el => {
+      el.style.width = el.dataset.target + '%';
+    });
+  }, 100);
+}
+
+// ── Render streak ──
+function renderStreak(streak) {
+  document.getElementById('streakNum').textContent = streak;
+  const today = new Date();
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const label = d.getDate();
+    const cls = i === 0 ? 'sd sd-today' : i <= streak - 1 ? 'sd sd-done' : 'sd sd-future';
+    days.push(`<div class="${cls}">${label}</div>`);
+  }
+  document.getElementById('streakDays').innerHTML = days.join('');
+}
+
+// ── Render wins ──
+function renderWins(wins) {
+  const emojis = ['✅','🎯','🔥','💡','⚡','🚀','💰','🏆','📈','🎉'];
+  document.getElementById('winsFeed').innerHTML = wins.slice(0, 20).map((w, i) => `
+    <div class="win-row fade-in" style="animation-delay:${i*0.04}s">
+      <span class="win-emoji">${emojis[i % emojis.length]}</span>
+      <div class="win-body">
+        <div class="win-text">${w.text}</div>
+        <div class="win-meta">${w.agent || 'Alo'} · ${w.date || ''}</div>
+      </div>
+      <span class="win-badge">Done</span>
+    </div>`).join('');
+}
+
+// ── Render Titan ──
+function renderTitan(titan) {
+  document.getElementById('titanQuote').innerHTML =
+    `"${titan.text}" <cite>— ${titan.author}</cite>`;
+  document.getElementById('titanGrid').innerHTML = `
+    <div class="t-block">
+      <div class="t-block-label">Current Constraint</div>
+      <div class="t-block-text"><strong>Outreach volume.</strong> Pipeline can't fill itself. SDR role is the unlock.</div>
+    </div>
+    <div class="t-block">
+      <div class="t-block-label">Framework This Week</div>
+      <div class="t-block-text"><strong>Hormozi:</strong> Charge more OR deliver more. Never cut price when you can add value.</div>
+    </div>
+    <div class="t-block">
+      <div class="t-block-label">The One Question</div>
+      <div class="t-block-text">What did you do today that a $300K/month Halo would recognize?</div>
+    </div>`;
+}
+
+// ── Render kanban ──
+function renderKanban(tasks) {
+  const cols = [
+    { key: 'todo',       label: 'To Do',       color: '#3b9eff', tasks: tasks.todo },
+    { key: 'inProgress', label: 'In Progress',  color: '#f5b731', tasks: tasks.inProgress },
+    { key: 'blocked',    label: 'Blocked',      color: '#ff5e6c', tasks: tasks.blocked },
+    { key: 'done',       label: 'Done',         color: '#00d48a', tasks: tasks.done },
+  ];
+
+  document.getElementById('kanban').innerHTML = cols.map(col => `
+    <div class="k-col">
+      <div class="k-header">
+        <div class="k-title">
+          <div class="k-dot" style="background:${col.color}"></div>
+          ${col.label}
+        </div>
+        <div class="k-count">${col.tasks.length}</div>
+      </div>
+      ${col.tasks.slice(0, 8).map(t => `
+        <div class="k-card ${t.done ? 'done' : ''}">
+          <div class="k-card-title">${t.title}</div>
+          <div class="k-card-foot">
+            <span class="k-agent">${t.note || 'Alo'}</span>
+            <span class="k-pri ${t.blocked ? 'pri-h' : t.done ? 'pri-d' : 'pri-m'}">${t.blocked ? 'Blocked' : t.done ? '✓ Done' : 'Active'}</span>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+// ── Render agents ──
+function renderAgents(agents) {
+  const avatarBg = {
+    alo: 'rgba(108,99,255,.15)', scout: 'rgba(59,158,255,.12)',
+    rex: 'rgba(255,94,108,.12)', ember: 'rgba(245,183,49,.12)',
+    volt: 'rgba(0,212,138,.12)', prism: 'rgba(255,100,180,.12)',
+    kargo: 'rgba(0,200,180,.12)', atlas: 'rgba(255,140,60,.12)',
+    titan: 'rgba(245,183,49,.12)', oracle: 'rgba(0,212,138,.1)',
+  };
+  document.getElementById('agentsGrid').innerHTML = agents.map((a, i) => `
+    <div class="a-card ${a.status === 'building' ? 'building' : ''} fade-in" style="animation-delay:${i*0.05}s">
+      <div class="a-avatar" style="background:${avatarBg[a.id] || 'rgba(108,99,255,.1)'}">
+        ${a.emoji}
+      </div>
+      <div class="a-info">
+        <div class="a-name">${a.name}</div>
+        <div class="a-role">${a.role}</div>
+      </div>
+      <div class="a-status">
+        ${a.status === 'online'
+          ? '<div class="dot-on"></div>'
+          : '<div class="dot-building"></div>'}
+      </div>
+    </div>`).join('');
+}
+
+// ── Render schedule ──
+function renderSchedule(items) {
+  document.getElementById('scheduleRow').innerHTML = items.map(s =>
+    `<div class="sched-item">
+      <span>${s.icon}</span>
+      <span>${s.name}</span>
+      <span class="sched-time">${s.time}</span>
+    </div>`).join('');
+}
+
+// ── Main data load ──
+async function loadData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+
+  try {
+    const res = await fetch('/api/state');
+    if (!res.ok) throw new Error('Server error');
+    state = await res.json();
+
+    document.getElementById('loading').style.display = 'none';
+    const page = document.getElementById('page');
+    page.style.display = 'flex';
+
+    const online = state.agents.filter(a => a.status === 'online').length;
+    document.getElementById('agentBadge').textContent = `● ${online} Agents Online`;
+
+    renderGoals(state.goals);
+    renderStreak(state.streak);
+    renderWins(state.wins);
+    renderTitan(state.titan);
+    renderKanban(state.tasks);
+    renderAgents(state.agents);
+    renderSchedule(state.cronSchedule);
+
+    document.getElementById('lastUpdated').textContent =
+      'Updated ' + new Date(state.timestamp).toLocaleTimeString('en-US', {
+        hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York'
+      }) + ' ET';
+
+    document.getElementById('errToast').style.display = 'none';
+  } catch (e) {
+    console.error(e);
+    document.getElementById('errToast').style.display = 'block';
+  } finally {
+    btn.classList.remove('spinning');
+  }
+}
+
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>
