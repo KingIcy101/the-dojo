@@ -1,0 +1,28 @@
+# Secrets — never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+credentials/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Generated / cache
+*.cache
+.DS_Store
+__pycache__/
+*.pyc
+
+# Voice server audio cache (large, regenerated at startup)
+voice-server/audio-cache/
+
+# Sensitive contact data
+voice-server/contacts/
+
+# Local CSV lead data (keep off git — personal data)
+halo-marketing/tools/*.csv
