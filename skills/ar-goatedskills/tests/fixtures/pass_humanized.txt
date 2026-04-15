@@ -1,0 +1,3 @@
+We should investigate this this week and decide by Friday.
+The proposal reduces handoff confusion and gives us clearer ownership.
+If results hold for two cycles, we can expand it.

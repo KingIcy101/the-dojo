@@ -1,0 +1,116 @@
+# Pete Bowen's Landing Page Guide
+Source: https://pete-bowen.com/i-m-paying-for-clicks-but-i-m-not-getting-enough-leads
+
+No PPC campaign - Google, Bing or Facebook - will deliver positive ROI if the landing page doesn't convert. You can have great QS, low CPC and ad copy that makes searchers drool, but unless your site converts those clicks into enquiries you're wasting your ad budget.
+
+PPC is easy when you've got high converting landing pages:
+- Competitive markets - your cost per conversion stays low even if you have to pay a little more per click.
+- Low budget clients - you can still deliver good ROI even if they don't have the funds for a comprehensive campaign.
+- Difficult client or micro-managing boss - deliver a steady stream of conversions and you look like a god.
+
+Low conversion rate is a two-sided problem. It could be something in the campaign - keyword choice, targeting, ad copy etc or it could be the website.
+
+If your site converts 1% of visitors into leads you're doing better than average. But, what about the 99% of visitors you lose forever?
+
+In 2009 I built a landing page generator. It's been used on about 2,500 websites - my lab rats. I've been able to optimise at a scale that most individual advertisers aren't able to - more than 2,000,000 people have filled in one of my contact forms.
+
+This guide contains design principles that have improved our landing page conversion rates. Applied together these changes have increased conversion rates by 10, 20 and in some cases even 40 times.
+
+The good news:
+- You don't have to be a designer to improve your conversion rate.
+- You don't have to apply every principle to see a lift.
+
+## The Rules
+
+### 1. Most people reject your site in seconds
+They'll click your ad, and then bounce right off your page without reading it. They won't come back. Ever. Studies have shown that you've got less than three seconds to save or lose your visitor forever.
+
+Why do people reject your site so fast? It's not what she sees, but what she doesn't see. The first question a brand new visitor asks: "Am I in the right place?"
+
+She will leave if you can't convince her that she's in the right place before the countdown hits zero. The landing page has to scream "You're in the right place" or you're going to lose her forever.
+
+Two things complete a great first impression:
+1. Make the site look easy to use.
+2. Make the site look fresh. A site that looks dated raises doubts.
+
+### 2. Why does your landing page exist?
+Your landing page exists to get your visitor to take the one next step closer to the sale. You get to a sale one step at a time.
+
+### 3. Design the page to guide your visitor to the next step
+Choose only one main action as the reason for the page. A landing page that tries to pull visitors in all directions ends up going nowhere.
+
+Make the next step your visitor must take the most prominent thing on the page:
+- Showing it early, near the top of the page.
+- Making it bigger than other elements on the page.
+- Using contrast: different font, colour, background etc.
+- Giving it space around it.
+
+### 4. Add extra calls to action
+The contact form will scroll off the top of the page if your visitor keeps reading. Add a big button at the bottom that takes them back to the form. It's responsible for a small increase in enquiries.
+
+### 5. Use the right words to convince your visitor
+Right now she doesn't care about:
+- Your mission statement.
+- That you offer "Personal, friendly and efficient service".
+- That you're "Driven by knowledge and quality".
+- That you have "Over 20 years' experience".
+- That you were voted best supplier at the 2015 banquet.
+- Your company values.
+
+She wants more evidence that she's in the right place. Focus on what she wants and offer to help her get it.
+
+### 6. Simplify your writing
+Run the words through the Hemingway app. Aim to tighten your writing so someone with a Grade 6, or lower, education can read it. Poor readers will be able to understand it. Good readers will appreciate the clarity.
+
+### 7. Declutter the site
+Every heading, logo, picture, link, paragraph, button and form either helps or hurts conversion. There are no neutral elements. If you put it on the page it will either move the visitor towards the next step, or get in the way.
+
+You make something look important by removing things around it. The Mona Lisa hangs alone. Your landing page has one purpose. Remove anything that distracts from that.
+
+### 8. Be conventional
+Your visitor knows how a website works because she's visited thousands of sites. Convention gives her a sense of familiarity. It keeps her from making mistakes. An unconventional layout may win your designer an award, but it won't win you as many leads as you deserve.
+
+### 9. Make your site look good on mobile
+There is no reason for your site to be mangled on a tiny screen.
+
+Test on mobile:
+- Is the right stuff at the top?
+- Is the text big enough?
+- Can you see the contact form?
+- Can you fill the form in? Are the fields big enough for your fingers?
+
+### 10. Use a big font
+Tiny fonts are a legacy from printing. Nobody charges for pixels on the web. Your visitor is one finger-twitch away from hitting the back button to find a site she can read.
+
+### 11. Get rid of the background
+Background images or textures make reading difficult. They add no value to a lead generation website.
+
+### 12. Use white space
+Paper is cheap on the internet. Be generous with space above, below and on either side of your content.
+
+### 13. Use a light background with dark text
+Low contrast sites can be beautiful and subtle, but they're hard to read. Use strong contrast for easy reading.
+
+### 14. Use fewer (or no) pictures
+Pictures are hard to get right. Big pictures slow the page. Small pictures are too small to be useful. Testing showed a picture didn't make more people fill in the enquiry form. No picture didn't make fewer people fill in the enquiry form. If client insists on a picture, put it near the bottom where it can't do much damage.
+
+### 15. Try a single column layout
+Single column layouts lend themselves to simple distraction-free design. They offer a clear flow path from top to bottom, like a book. They also look much better on mobile.
+
+### 16. Use useful headlines
+Headlines are the skeleton of the page. They tell the visitor what's on the page and where they'll find it. That lets her scan to confirm she's in the right place. Make them bigger, bolder, and possibly in a different font.
+
+### 17. Make your landing page fast
+Your future customer will hit the back button if your website takes too long to load. Remove most pictures for a quick speed boost. Those beautiful photos might win artistic awards but they're not going to win new business.
+
+### 18. Don't send visitors to your home page
+Your home page is all about your business. A landing page is all about the visitor. Your home page needs detailed navigation. A landing page must be free of distraction.
+
+### 19. Make your landing pages secure
+Use HTTPS. Some visitors are security savvy and will bounce without the lock icon. Many browsers warn when filling forms on insecure sites.
+
+### 20. Use contact forms, not click-to-email links
+Contact forms are well understood and work on all devices. Email links are not as robust.
+
+### 21. Your contact form is the weakest link
+Your contact form is all that stands between you and a profitable sale. Conversion rates can double, triple and even 10X after a few quick changes to the enquiry form.
