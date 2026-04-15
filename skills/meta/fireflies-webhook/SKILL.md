@@ -1,134 +1,106 @@
 ---
 name: fireflies-webhook
-description: Process Fireflies meeting transcripts via webhook — store in Supabase, extract action items, enable on-demand memory query.
+description: Fireflies.ai webhook integration — transcripts hit voice-server, route to Dex for follow-up drafting
 category: meta
 ---
 
-# Fireflies Webhook Integration
+# Fireflies Webhook — ZTA Pipeline
 
 ## When to Use
-Setting up automatic processing of sales or ops calls recorded by Fireflies. Enables meeting memory, action item extraction, and post-call automation triggers.
+Fireflies detects meeting transcripts, webhook fires immediately after call ends. Triggers Dex to draft post-call follow-up email. Part of ZeroToAgent sales ops flow.
 
-## Fireflies Payload Structure
-```js
+## Current Implementation (April 15, 2026)
+
+**Webhook URL:** `https://supervisors-satellite-climb-designer.trycloudflare.com/webhook/fireflies`
+
+**Flow:**
+1. Fireflies records call → transcript ready
+2. `POST /webhook/fireflies` hits voice-server
+3. Parse meeting title, participants, duration, transcript, summary
+4. Send Discord message to Dex channel (`1493317773970112743`) with:
+   - Meeting title & duration
+   - Participant names
+   - Summary excerpt
+   - Full transcript (first 1500 chars)
+5. Dex reads message → loads matt-voice skill → drafts follow-up email → posts to #zta-sales-drafts
+6. Matt reviews & approves → Dex sends
+
+## Payload Format (what Fireflies sends)
+```json
 {
-  title: "Call with Prospect Name",
-  participants: [{ displayName: "Matt Bender", email: "matt@inthepast.ai" }],
-  date: "2026-04-15T14:00:00Z",
-  summary: {
-    overview: "Discussion of CAO framework and pricing...",
-    action_items: ["Send proposal by Friday", "Schedule follow-up for next week"],
-    keywords: ["CAO", "pricing", "timeline"],
-  },
-  transcript: [
-    { speaker: "Matt Bender", content: "So tell me about your current ops..." },
-    { speaker: "Prospect", content: "We're running everything manually..." },
-  ],
+  "event": "transcript_ready",
+  "data": {
+    "meeting_id": "abc123",
+    "transcript": "Full text of the meeting...",
+    "title": "Call with Prospect XYZ",
+    "summary": "High-level summary...",
+    "participants": [
+      { "name": "Matt Bender", "email": "matt@inthepast.ai" },
+      { "name": "Prospect", "email": "prospect@company.com" }
+    ],
+    "duration_seconds": 1234,
+    "created_at": "2026-04-15T14:00:00Z"
+  }
 }
 ```
 
-## Steps
+## Implementation in server.js
 
-1. Register webhook URL in Fireflies dashboard (Settings > Integrations > Webhooks)
-2. Handle `POST /webhook/fireflies` in Express
-3. Verify `X-Fireflies-Signature` header
-4. Parse and store to Supabase `meetings` table
-5. Extract action items → create tasks
-6. Trigger downstream automations (Dex post-call flow, etc.)
+Located at `/Users/mattbender/.openclaw/workspace/voice-server/server.js` around line 1880:
 
-## Key Patterns / Code
-
-### Webhook Handler
 ```js
-import crypto from 'crypto';
+app.post('/webhook/fireflies', async (req, res) => {
+  res.sendStatus(200); // ack immediately
+  const payload = req.body;
+  if (payload.event !== 'transcript_ready') return;
 
-app.post('/webhook/fireflies', express.raw({ type: 'application/json' }), async (req, res) => {
-  // Auth
-  const sig = req.headers['x-fireflies-signature'];
-  const expected = crypto
-    .createHmac('sha256', process.env.FIREFLIES_WEBHOOK_SECRET)
-    .update(req.body)
-    .digest('hex');
-  if (sig !== expected) return res.status(401).send('Invalid signature');
-
-  res.sendStatus(200); // ack before processing
-
-  const data = JSON.parse(req.body);
-  await processMeeting(data);
+  const data = payload.data || {};
+  const { meeting_id, transcript, title, summary, participants, duration_seconds } = data;
+  
+  // Extract participant names
+  const participantNames = participants?.map(p => p.name).filter(Boolean) || [];
+  
+  // Build Discord message for Dex
+  const discordPayload = {
+    content: `🔗 New Fireflies transcript ready\n\n**Meeting:** ${title || 'Untitled'}\n**Duration:** ${Math.round(duration_seconds / 60)} min\n**Participants:** ${participantNames.join(', ') || 'Unknown'}\n\n**Summary:**\n${summary || 'No summary'}\n\n---\n\n**Transcript:**\n${transcript.substring(0, 1500)}${transcript.length > 1500 ? '...' : ''}\n\nReady to draft follow-up email.`
+  };
+  
+  // Send to Dex Discord
+  const dexChannelId = process.env.DEX_CHANNEL_ID || '1493317773970112743';
+  await axios.post(
+    `https://discordapp.com/api/channels/${dexChannelId}/messages`,
+    discordPayload,
+    { headers: { 'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}` } }
+  );
 });
 ```
 
-### Store Meeting in Supabase
-```js
-async function processMeeting(data) {
-  const { title, participants, date, summary, transcript } = data;
+## Fireflies Setup
 
-  // Store meeting
-  const { data: meeting } = await supabase.from('meetings').insert({
-    title,
-    participants: JSON.stringify(participants),
-    date,
-    overview: summary?.overview,
-    action_items: summary?.action_items || [],
-    keywords: summary?.keywords || [],
-    transcript: JSON.stringify(transcript),
-  }).select().single();
+1. Log into Fireflies.ai dashboard
+2. Settings → Integrations → Webhooks
+3. Add webhook URL: `https://supervisors-satellite-climb-designer.trycloudflare.com/webhook/fireflies`
+4. Select "Transcript Ready" event
+5. Optionally filter by meeting type or participant (leave blank for all meetings)
+6. Save
 
-  // Create action item tasks
-  for (const item of (summary?.action_items || [])) {
-    await supabase.from('tasks').insert({
-      meeting_id: meeting.id,
-      description: item,
-      status: 'open',
-    });
-  }
+## Env vars needed
+- `DEX_CHANNEL_ID` — Discord channel ID where Dex sits (default: 1493317773970112743)
+- `DISCORD_BOT_TOKEN` — Alo's Discord bot token (already in .env)
+- `FIREFLIES_API_KEY` — For API calls (not strictly needed for webhook, but useful for future pulls)
 
-  // Trigger post-call automation if sales call
-  const isSalesCall = summary?.keywords?.includes('CAO') || summary?.keywords?.includes('pricing');
-  if (isSalesCall) {
-    await triggerDexFlow(data);
-  }
-}
-```
+## What happens next
+- Dex receives transcript in Discord
+- Loads matt-voice skill for proper tone
+- Drafts 3-industry-use-case follow-up email (per Dex AGENTS.md rule)
+- Posts to #zta-sales-drafts
+- Matt reviews + "send" → email ships
 
-### Supabase Schema
-```sql
-CREATE TABLE meetings (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  title TEXT,
-  participants JSONB,
-  date TIMESTAMPTZ,
-  overview TEXT,
-  action_items TEXT[],
-  keywords TEXT[],
-  transcript JSONB,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+## Testing
+Once Fireflies webhook is set up, place a test call through Fireflies or have a real one recorded. Transcript should arrive within 30s, Dex should see it in Discord immediately.
 
-CREATE TABLE tasks (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  meeting_id UUID REFERENCES meetings(id),
-  description TEXT,
-  status TEXT DEFAULT 'open',
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-```
+## Future: Team-level routing
+Phase 2 will route transcripts to Slack for broader team visibility and triage by agent. For now, Dex channel is the single source.
 
-### On-Demand Memory Query
-```js
-// Query meetings by keyword or date
-const { data: meetings } = await supabase
-  .from('meetings')
-  .select('title, date, overview, action_items')
-  .contains('keywords', ['CAO'])
-  .order('date', { ascending: false })
-  .limit(5);
-```
-
-## Gotchas
-- Use `express.raw()` for the webhook route — signature verification requires the raw body buffer
-- Register the tunnel/prod URL in Fireflies dashboard before testing — Fireflies doesn't retry failed deliveries
-- `X-Fireflies-Signature` format: plain hex HMAC-SHA256 (no `sha256=` prefix like GitHub)
-- `summary` object may be null if Fireflies hasn't finished processing — check before accessing
-- `transcript` array can be large (500+ entries for 1hr call) — store as JSONB, don't stringify for search
-- Fireflies sends webhook on meeting end, not on manual upload — test with a real quick call
+---
+*Last updated: 2026-04-15*
