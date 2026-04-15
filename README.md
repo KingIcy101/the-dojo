@@ -1,43 +1,59 @@
-# Agent Skills — The Dojo
+# The Dojo
 
-Reusable skill files for OpenClaw AI agents. Every skill we build or discover goes here.
+The shared skill library for all OpenClaw AI agents.
+
+Every skill is a markdown file an agent can load mid-task to get expert-level context on a tool, pattern, or workflow — without building from scratch.
+
+---
 
 ## Structure
 
 ```
 skills/
-  dev/        — Forge: Next.js, React, Supabase, Stripe, Vercel, testing
-  design/     — Pixel: UI/UX, animation, typography, component libraries
-  infra/      — Core: deploy, CI/CD, security, monitoring
-  itp/        — ITP team: Vapi, intake, onboarding, voice agents
-  sales/      — Dex: cold email, objection handling, Hormozi frameworks
-  business/   — Mara/Iris/Scribe: retention, copywriting, content
-  meta/       — Agent setup, memory systems, skill creation
-docs/         — Reference material, playbooks, guides
+├── dev/          # Next.js, Supabase, Stripe, Vapi, Clerk, Vercel, PM2, etc.
+├── design/       # Tailwind, shadcn, GSAP, Framer Motion, Three.js, UI/UX
+├── business/     # CAO framework, ZTA, contracts, voice standards, pricing
+├── sales/        # Hormozi suite, cold email, closing, leads, pricing, proof
+├── itp/          # In The Past AI — Vapi, Bland AI, GHL
+├── meta/         # Agent infra — setup, memory, heartbeat, cron, harness
+├── infra/        # Deployment, monitoring, brain vault
+└── ar-goatedskills/  # 460+ skills from Ar's goatedskills library
 ```
-
-## How Skills Work
-
-A skill is a `SKILL.md` file that teaches an agent exactly how to perform a specific task. Drop it in an agent's `.agents/skills/` directory and OpenClaw surfaces it automatically when relevant.
-
-Skills are Git-backed, versioned, and reviewed. Every breakthrough one person figures out becomes a baseline for everyone.
-
-## Usage
-
-Copy any skill folder into your agent's workspace:
-```bash
-cp -r skills/dev/nextjs ~/.openclaw/workspace-forge/.agents/skills/
-```
-
-Or sync all at once — see `scripts/sync.sh`
-
-## Contributing
-
-1. Build something. Figure out the best way to do it.
-2. Package it as a `SKILL.md` — description, when to use, step-by-step.
-3. Drop it in the right `skills/` subfolder.
-4. Push. Everyone benefits.
 
 ---
 
-Inspired by Ramp's Dojo. Built by the Zero to Agent team.
+## Usage
+
+Load a skill in any agent:
+```bash
+cat ~/.openclaw/workspace/.agents/skills/<name>/SKILL.md
+```
+
+Search the full index:
+```bash
+cat ~/.openclaw/workspace/.agents/skills-index.md | grep "keyword"
+```
+
+Add a new skill after a build:
+```bash
+bash ~/.openclaw/workspace/scripts/auto-skill.sh \
+  --name "skill-name" \
+  --category "dev|design|sales|business|itp|infra|meta" \
+  --description "one sentence" \
+  --content "$(cat /path/to/SKILL.md)"
+```
+
+Sync index to all agent workspaces:
+```bash
+python3 ~/.openclaw/workspace/scripts/rebuild-skills-index.py
+```
+
+---
+
+## Auto-Learning
+
+Daily cron (2am ET) reads the session log, detects novel patterns, generates SKILL.md files automatically, and pushes. No manual step needed.
+
+---
+
+Built for the OpenClaw agent stack — Forge, Pixel, Judge, Core, Dex, Mara, Iris, Scribe, Echo.
